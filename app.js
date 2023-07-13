@@ -1,6 +1,4 @@
 /** Express app for message.ly. */
-
-
 const express = require("express");
 const cors = require("cors");
 const { authenticateJWT } = require("./middleware/auth");
@@ -46,6 +44,5 @@ app.use(function(err, req, res, next) {
     message: err.message
   });
 });
-
 
 module.exports = app;
