@@ -79,7 +79,7 @@ DELETE https://jira.atlassian.com/rest/api/2/version/20
 # Content-Type: application/json
 
 # {
-# 	"body" : " I really want to fuck the shit out of you",
+# 	"body" : " I really would like to get some ice cream",
 # 	"to_username" : "ali",
 # 	"from_username" : "ari"
 # }
