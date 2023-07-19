@@ -134,7 +134,7 @@ Content-Type: application/json
 # POST http://localhost:3000/messages/
 # Content-Type: application/json
 # {
-# 	"body" : " I really want to fuck the shit out of you",
+# 	"body" : "How bout them apples!",
 # 	"to_username" : "mary",
 # 	"from_username" : "frank",
 #   "_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hcnkiLCJpYXQiOjE2ODk4MDYwNjN9.M2CpShJt0ZuWwhddH78XO9NuVLD-tvAC0YlW1Nm92wY"
