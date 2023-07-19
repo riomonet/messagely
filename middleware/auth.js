@@ -5,10 +5,12 @@ const { SECRET_KEY } = require("../config");
 
 /** Middleware: Authenticate user. */
 
+
 function authenticateJWT(req, res, next) {
   try {
     const tokenFromBody = req.body._token;
-    const payload = jwt.verify(tokenFromBody, SECRET_KEY);
+      const payload = jwt.verify(tokenFromBody, SECRET_KEY);
+      console.log(payload)
     req.user = payload; // create a current user
     return next();
   } catch (err) {
@@ -25,6 +27,7 @@ function ensureLoggedIn(req, res, next) {
     return next();
   }
 }
+
 
 /** Middleware: Requires correct username. */
 

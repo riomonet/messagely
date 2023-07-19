@@ -1,15 +1,8 @@
 const Message = require('../models/message')
 const express = require("express");
 const router = express.Router();
-// const db = require('../db')
-// const ExpressError = require('../expressError')
-// const bcrypt = require('bcrypt')
-// const jwt = require('jsonwebtoken')
-// const { BCRYPT_WORK_FACTOR, SECRET_KEY } = require ('../config')
-// const { ensureLoggedIn, ensureAdmin } = require('../middleware/auth')
-
-
-
+const { ensureLoggedIn, ensureCorrectUser } = require('../middleware/auth')
+const ExpressError = require('../expressError')
 
 /** GET /:id - get detail of message.
  *
@@ -24,10 +17,13 @@ const router = express.Router();
  *
  **/
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', ensureLoggedIn,  async (req, res, next) => {
     try {
 	const msg = await Message.get(req.params.id);
-	return res.json(msg);
+	console.log(req.user.username)
+	if (msg.from_user.username === req.user.username || msg.to_user.username === req.user.username)
+	    return res.json(msg);
+	throw new ExpressError("Uggh Invalid user", 401)
     } catch (e) {
 	return next(e)
     }
@@ -40,10 +36,12 @@ router.get('/:id', async (req, res, next) => {
  *
  **/
 
-router.post('/', async (req, res, next) => {
+router.post('/', ensureLoggedIn, async (req, res, next) => {
     try {
-	const msg = await Message.create(req.body)
-	return res.json(msg)
+	if (req.user.username === req.body.from_username){
+	    const msg = await Message.create(req.body)
+	    return res.json(msg)}
+	throw new ExpressError("NOT ALLOWED TO SEND", 401)
     } catch (e) {
 	return next(e)
     }
