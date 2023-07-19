@@ -1,4 +1,3 @@
-
 /** User class for message.ly */
 /** User of the site. */
 
@@ -12,11 +11,10 @@ class User {
   /** register new user -- returns
    *    {username, password, first_name, last_name, phone}
    */
-    
-    static async register( {username, password, first_name, last_name, phone} ) {
-	
+    static async register(username, password, first_name, last_name, phone) {
+
 	const timestamp = new Date();
-	const hashed = await bcrypt.hash(password, BCRYPT_WORK_FACTOR)
+	const hashed = await bcrypt.hash(password,BCRYPT_WORK_FACTOR)
 	const results = await db.query(
 	    `INSERT INTO users (username, password, first_name, last_name,  phone, join_at, last_login_at)
 	     VALUES ($1, $2, $3, $4, $5,$6,$7)
@@ -26,9 +24,10 @@ class User {
     }
     
     
+    
   /** Authenticate: is this username/password valid? Returns boolean. */
 
-    static async authenticate(username, password) {
+    static async authenticate (username, password) {
 
 	const results = await db.query('SELECT username,password FROM users WHERE username = $1', [username]);
 	if(results.rows.length > 0) {
@@ -118,7 +117,6 @@ class User {
 		}
 	    )
 	}
-	
 	return  arr;
     }
     
@@ -156,10 +154,9 @@ class User {
 		}
 	    )
 	}
-	
+
 	return  arr;
     }
 }
     
-
 module.exports = User;

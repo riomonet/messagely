@@ -1,3 +1,16 @@
+const Message = require('../models/message')
+const express = require("express");
+const router = express.Router();
+// const db = require('../db')
+// const ExpressError = require('../expressError')
+// const bcrypt = require('bcrypt')
+// const jwt = require('jsonwebtoken')
+// const { BCRYPT_WORK_FACTOR, SECRET_KEY } = require ('../config')
+// const { ensureLoggedIn, ensureAdmin } = require('../middleware/auth')
+
+
+
+
 /** GET /:id - get detail of message.
  *
  * => {message: {id,
@@ -11,6 +24,14 @@
  *
  **/
 
+router.get('/:id', async (req, res, next) => {
+    try {
+	const msg = await Message.get(req.params.id);
+	return res.json(msg);
+    } catch (e) {
+	return next(e)
+    }
+})
 
 /** POST / - post message.
  *
@@ -19,6 +40,14 @@
  *
  **/
 
+router.post('/', async (req, res, next) => {
+    try {
+	const msg = await Message.create(req.body)
+	return res.json(msg)
+    } catch (e) {
+	return next(e)
+    }
+})
 
 /** POST/:id/read - mark message as read:
  *
@@ -28,3 +57,14 @@
  *
  **/
 
+router.post('/:id/read', async (req, res, next) => {
+
+    try {
+	const msg = await Message.markRead(req.params.id);
+ 	return res.json(msg)
+    } catch (e) {
+	return next(e)
+    }
+})
+
+module.exports = router;
